@@ -11,6 +11,19 @@
 - **SIGN/SIGN_lasso_noise:** Impact of noise heterogeneity as discussed in Section 2.3.
 - **SIGN/SIGN_true:** Empirical East Pacific Ocean acoustic experiment as discussed in Section 2.4.
 
+# Dependencies
+
+The following are the required dependencies and their versions for the project:
+
+- `torch==2.0.1`
+- `torch-cluster==1.6.0`
+- `torch-geometric==2.2.0`
+- `torch-scatter==2.0.9`
+- `torch-sparse==0.6.13`
+- `torch-spline-conv==1.2.1`
+- `numpy==1.21.5`
+- `scikit-learn==1.0.2`
+
 ## Quick Start:
 Navigate to any experimental folder and run:
 ```bash

@@ -11,7 +11,6 @@
 - **SIGN/SIGN_lasso_noise:** Impact of noise heterogeneity as discussed in Section 2.3.
 - **SIGN/SIGN_true:** Empirical East Pacific Ocean acoustic experiment as discussed in Section 2.4.
 
-
 ## Quick Start:
 Navigate to any experimental folder and run:
 ```bash

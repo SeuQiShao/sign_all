@@ -29,6 +29,10 @@ Navigate to any experimental folder and run:
 ```bash
 bash run.sh
 ```
+or
+```
+python trainer.py
+```
 
 ## Generate Data:
 In the SIGN_data/data directory, run:

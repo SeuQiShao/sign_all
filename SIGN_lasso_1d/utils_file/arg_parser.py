@@ -19,7 +19,7 @@ def parse_args():
         "--poly_n", type=int, default=2, help="Neg_Polynomial of Library."
     )
     parser.add_argument(
-        "--activate", type=bool, default=False, help="activation of Library."
+        "--activate", type=bool, default=True, help="activation of Library."
     )
 
 
@@ -29,10 +29,7 @@ def parse_args():
     ############## training hyperparameter ##############
 
     parser.add_argument(
-        "--epochs", type=int, default=150, help="Number of epochs to train."
-    )
-    parser.add_argument(
-        "--l1_epochs", type=int, default=10, help="Number of epochs to train."
+        "--epochs", type=int, default=10, help="Number of epochs to train."
     )
     parser.add_argument(
         "--batch_size", type=int, default=40, help="Number of samples per batch."  # default=32
@@ -50,12 +47,6 @@ def parse_args():
         help="After how epochs to decay LR by a factor of gamma.",
     )
     parser.add_argument("--gamma", type=float, default=0.9, help="LR decay factor.")  
-    parser.add_argument(
-        "--UseTD",
-        type=bool,
-        default=False,
-        help='use time-delay'
-    )
 
     parser.add_argument(
         "--lasso_neighbor_num",
@@ -66,7 +57,7 @@ def parse_args():
     parser.add_argument(
         "--lasso_node_num",
         type=int,
-        default=200,
+        default=50,
         help='lasso_node_num'
     )
     ############## DataSet ##############
@@ -74,13 +65,12 @@ def parse_args():
         "--num_workers", type=int, default=0, help="Number of Workers."
     )
     parser.add_argument('--network', type=str,
-                    choices=['random', 'power_law', 'small_world','oregon', 'git', 'Twitch', 'email', 'CA'], default='power_law')
+                    choices=['random', 'power_law', 'small_world','from_file'], default='from_file')
     parser.add_argument('--ode_model', type=str,
-                    choices=['HeatDiffusion', 'Kuramoto'], default='Kuramoto')
-    parser.add_argument('--time_stamp', type=int, default=400, help="number of timesteps.")
-    parser.add_argument('--noise', type=float, default=0, help="noise.")
-    parser.add_argument('--coupled', type=float, default=0.1, help="coupled.")
-    parser.add_argument('--num_atoms', type=int, default=1000) # 10670 37700 168114 36692 23133
+                    choices=['SIS', 'Kuramoto', 'Gene'], default='Kuramoto')
+    parser.add_argument('--time_stamp', type=int, default=1000, help="number of timesteps.")
+    parser.add_argument('--time_interval', type=float, default=0.01, help="number of sample interval.")
+    parser.add_argument('--num_atoms', type=int, default=149684) #37700 1686 149684
     parser.add_argument('--dims', type=int, default=1)
     parser.add_argument('--save', type=bool, default=True)
     
@@ -102,17 +92,9 @@ def parse_args():
     parser.add_argument(
         "--agg",
         type=str,
-        default='add',
+        default='mean',
         help="agg function: add/mean.",
     )
-
-    parser.add_argument(
-        "--UseF",
-        type=bool,
-        default=True,
-        help='use self upgrade'
-    )
-    parser.add_argument("--F_coef", type=float, default=1, help="Coefs of F(x).")
 
     parser.add_argument(
         "--UseEdgeAttr",
@@ -205,7 +187,7 @@ def parse_args():
     args.validate = not args.no_validate
     args.use_encoder = not args.dont_use_encoder
     args.time = datetime.datetime.now().isoformat().replace(':','')
-    args.root = '/home/shaoqi/code/SIGN_all/SIGN_data/' + args.ode_model +'_' + str(args.num_atoms) + '_' + args.network + '_' + str(args.noise) + '_' + str(args.coupled)
+    args.root = '/data/scratch/acw802/SIGN_lasso_1d/SIGN_data/{}_{}_{}_{}_{}'.format(args.ode_model, args.num_atoms, args.network, args.time_interval, args.time_stamp)
     np.random.seed(args.seed)
     torch.manual_seed(args.seed)
 

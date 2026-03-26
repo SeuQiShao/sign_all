@@ -64,16 +64,16 @@ class Kuramoto(MessagePassing):
     dtheta_i/dt = omega_i  +  1/N *sum(k_ij * sin(theta_j - theta_i))
 
     """
-    def __init__(self, edge_index, edge_attr = None, aggr = 'mean'):
+    def __init__(self, edge_index, edge_attr = None, aggr = 'add'):
         super(Kuramoto, self).__init__()
         self.aggr = aggr
-        self.k = 0.2
+        self.k = 0.15
         self.edge_index = edge_index
         if edge_attr is not None:
             self.edge_attr = edge_attr
         else:
             self.edge_attr = 1
-        self.omega = 0.5
+        self.omega = 0.3
     def forward(self, t, x):
         edge_index = self.edge_index
 
@@ -85,6 +85,40 @@ class Kuramoto(MessagePassing):
 
     def update(self, aggr_out):
         return aggr_out + self.omega
+
+
+class SIS(MessagePassing):
+    """
+    SIS model:
+    dtheta_i/dt = -axi + \sum (1 -xi)xj = -axi \sum xj - xixj
+
+    """
+    def __init__(self, edge_index, edge_attr = None, aggr = 'add'):
+        super(SIS, self).__init__()
+        self.aggr = aggr
+        self.a = -1
+        self.edge_index = edge_index
+        if edge_attr is not None:
+            self.edge_attr = edge_attr
+        else:
+            self.edge_attr = 1
+
+    def forward(self, t, x):
+        edge_index = self.edge_index
+
+        out = self.a * x
+        out += self.propagate(edge_index, x=x, edge_attr=self.edge_attr)
+        # out = self.propagate(edge_index, x=x, edge_attr=self.edge_attr)
+        return out
+    
+    def message(self, x_i, x_j, edge_attr):
+        #return edge_attr * x_i * x_j * 0.1
+        return x_j - x_i * x_j
+    
+    # def update(self, aggr_out, x):
+    #     return aggr_out + self.a * x
+
+
 
 
 
@@ -105,22 +139,22 @@ class GeneDynamics(MessagePassing):
             self.edge_attr = edge_attr
         else:
             self.edge_attr = 1
-        self.h = 2
+        self.h = 1
         self.f = 1
-        self.b = 0.2
-        self.e = 0.1
+        self.b = 1
+        self.e = 1
 
     def forward(self, t, x):
         edge_index = self.edge_index
-
-
-        return self.propagate(edge_index, x=x, edge_attr=self.edge_attr)
+        out = - torch.pow(x, self.f) * self.b
+        out += self.propagate(edge_index, x=x, edge_attr=self.edge_attr)
+        return out
 
     def message(self, x_j, edge_attr):
         return self.e * edge_attr * (torch.pow(x_j, self.h)/(1 + torch.pow(x_j, self.h)))
 
-    def update(self, aggr_out, x):
-        return aggr_out - torch.pow(x, self.f) * self.b
+    def update(self, aggr_out):
+        return aggr_out 
 
 
 

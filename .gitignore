@@ -1,5 +1,0 @@
-/SIGN_data
-!SIGN_data/data
-*.csv
-*/logs
-!SIGN_data/enso*

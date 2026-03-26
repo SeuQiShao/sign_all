@@ -1,15 +1,11 @@
 # Ultra-Large-Scale Dynamical System Reconstruction and Identification
 
 ## File Directory:
-- **SIGN/SIGN_alt:** Alternative dynamical inference corresponding to Section 2.3(d-g).
-- **SIGN/SIGN_cou:** Influence of coupling strength corresponding to Section 2.3(c,d).
-- **SIGN/SIGN_data/data:** Simulation data generator; all data is located in the SIGN_data directory.
 - **SIGN/SIGN_lasso_1d:** 1D dynamical inference as discussed in Section 2.2.
-- **SIGN/SIGN_lasso_1_c:** 1D dynamical inference with Neural ODE.
-- **SIGN/SIGN_lasso_2d:** 2D dynamical inference as discussed in Section 2.2.
-- **SIGN/SIGN_lasso_3d:** 3D dynamical inference as discussed in Section 2.2.
-- **SIGN/SIGN_lasso_noise:** Impact of noise heterogeneity as discussed in Section 2.3.
-- **SIGN/SIGN_true:** Empirical East Pacific Ocean acoustic experiment as discussed in Section 2.4.
+- **SIGN/SIGN_lasso_hd:** high-dimentional dynamical inference as discussed in Section 2.2.
+- **SIGN/SIGN_lasso_\*d_noise/low_rank/miss_nodes/miss_edges:** Impact of robustnuess as discussed in Section 2.3.
+- **SIGN/SIGN_true_hd_pred:** Simulate dynamics prediction experiment as discussed in Section 2.4.
+- **SIGN/SIGN_true_pred:** Empirical East Pacific Ocean acoustic experiment as discussed in Section 2.5.
 
 # Dependencies
 
@@ -35,7 +31,7 @@ python trainer.py
 ```
 
 ## Generate Data:
-In the SIGN_data/data directory, run:
+In the /data directory, run:
 ```bash
 bash data.sh
 ```

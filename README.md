@@ -1,4 +1,4 @@
-# Ultra-Large-Scale Dynamical System Reconstruction and Identification
+# Predicting Dynamics of Ultra-Large Complex Systems by Inferring Governing Equations
 
 ## File Directory:
 - **SIGN/SIGN_lasso_1d:** 1D dynamical inference as discussed in Section 2.2.
